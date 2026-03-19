@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohammad Mahabub Alam — Senior Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface-hover: #1a1a26;
+      --border: #1e1e2e;
+      --text: #e4e4ef;
+      --text-secondary: #8888a4;
+      --accent: #58a6ff;
+      --accent-dim: rgba(88,166,255,0.12);
+      --green: #3fb950;
+      --purple: #a78bfa;
+      --orange: #f0883e;
+      --pink: #f472b6;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .85; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,15,.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    nav .logo { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+    nav .logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul a { color: var(--text-secondary); font-size: .9rem; font-weight: 500; transition: color .2s; }
+    nav ul a:hover { color: var(--accent); opacity: 1; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      width: 24px; height: 2px; background: var(--text); border-radius: 2px;
+      transition: .3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 64px;
+    }
+    .hero-inner { width: 100%; }
+    .hero .label {
+      display: inline-block; font-size: .8rem; font-weight: 600;
+      color: var(--accent); background: var(--accent-dim);
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 20px;
+      letter-spacing: .5px;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: 1.15rem; color: var(--text-secondary); max-width: 560px; margin-bottom: 32px; }
+
+    .stats-row { display: flex; gap: 40px; margin-bottom: 40px; }
+    .stat-item .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); }
+    .stat-item .stat-label { font-size: .85rem; color: var(--text-secondary); }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 8px; font-weight: 600;
+      font-size: .95rem; transition: transform .15s, box-shadow .15s;
+      border: none; cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 0; }
+    .section-title {
+      font-size: 2rem; font-weight: 700; margin-bottom: 12px;
+    }
+    .section-sub { color: var(--text-secondary); margin-bottom: 48px; max-width: 560px; }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .about-text p { color: var(--text-secondary); margin-bottom: 16px; font-size: 1.05rem; }
+    .about-highlights { display: grid; gap: 16px; }
+    .highlight-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px;
+      transition: border-color .2s;
+    }
+    .highlight-card:hover { border-color: var(--accent); }
+    .highlight-card .hl-icon { font-size: 1.4rem; margin-bottom: 8px; }
+    .highlight-card h4 { font-size: .95rem; font-weight: 600; margin-bottom: 4px; }
+    .highlight-card p { font-size: .85rem; color: var(--text-secondary); }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .skill-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color .2s, transform .2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .skill-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .skill-card .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      font-size: .82rem; padding: 5px 12px; border-radius: 6px;
+      background: var(--accent-dim); color: var(--accent); font-weight: 500;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
+      width: 2px; background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 48px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -32px; top: 8px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg);
+    }
+    .timeline-item h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+    .timeline-item .t-company { color: var(--accent); font-weight: 600; font-size: .95rem; }
+    .timeline-item .t-date { color: var(--text-secondary); font-size: .85rem; margin-bottom: 12px; }
+    .timeline-item ul { list-style: none; }
+    .timeline-item li {
+      position: relative; padding-left: 18px; margin-bottom: 8px;
+      color: var(--text-secondary); font-size: .95rem;
+    }
+    .timeline-item li::before {
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color .2s, transform .2s;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
+    .project-card p { font-size: .9rem; color: var(--text-secondary); flex: 1; margin-bottom: 16px; }
+    .project-card .p-tech { font-size: .8rem; color: var(--accent); font-weight: 500; }
+    .project-card .p-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; font-size: .85rem; font-weight: 600;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .contact-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      text-align: center; transition: border-color .2s;
+    }
+    .contact-card:hover { border-color: var(--accent); }
+    .contact-card .c-icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .contact-card h4 { font-size: .9rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .contact-card p { font-size: 1rem; font-weight: 500; }
+    .contact-card a { color: var(--text); }
+    .contact-card a:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 32px 0;
+      text-align: center; font-size: .85rem; color: var(--text-secondary);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      nav.open ul {
+        display: flex; flex-direction: column; position: absolute;
+        top: 64px; left: 0; right: 0; background: rgba(10,10,15,.96);
+        padding: 24px; gap: 20px; border-bottom: 1px solid var(--border);
+      }
+      .about-grid { grid-template-columns: 1fr; }
+      .stats-row { gap: 24px; }
+      .hero h1 { font-size: 2rem; }
+      section { padding: 64px 0; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-row { flex-direction: column; gap: 16px; }
+      .skills-grid, .projects-grid, .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="container">
+    <a href="#" class="logo">mahabub<span>.dev</span></a>
+    <button class="hamburger" onclick="document.getElementById('nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul>
+      <li><a href="#about" onclick="document.getElementById('nav').classList.remove('open')">About</a></li>
+      <li><a href="#skills" onclick="document.getElementById('nav').classList.remove('open')">Skills</a></li>
+      <li><a href="#experience" onclick="document.getElementById('nav').classList.remove('open')">Experience</a></li>
+      <li><a href="#projects" onclick="document.getElementById('nav').classList.remove('open')">Projects</a></li>
+      <li><a href="#contact" onclick="document.getElementById('nav').classList.remove('open')">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <span class="label">AVAILABLE FOR OPPORTUNITIES</span>
+      <h1>Hi, I'm <span class="gradient">Mohammad<br/>Mahabub Alam</span></h1>
+      <p>Senior Full Stack Developer specializing in .NET, React, and scalable microservices architecture for healthcare and enterprise SaaS platforms.</p>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">9+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Microservices Built</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40%</div>
+          <div class="stat-label">API Performance Gain</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">Get In Touch</a>
+        <a href="https://github.com/mMahabub" class="btn btn-outline" target="_blank" rel="noopener noreferrer">View GitHub &#8599;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-title">About Me</div>
+    <div class="section-sub">Building enterprise software that scales.</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a Senior Full Stack Developer with 9+ years of experience building high-performance web applications and distributed systems. My core expertise lies in the .NET ecosystem and modern JavaScript frameworks.</p>
+        <p>I specialize in healthcare platforms (HIPAA-compliant), multi-tenant SaaS applications, and event-driven microservices architectures. I'm passionate about writing clean, maintainable code and mentoring development teams.</p>
+        <p>US Green Card Holder based in Queens, New York.</p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-card">
+          <div class="hl-icon">&#9889;</div>
+          <h4>.NET Expert</h4>
+          <p>Deep expertise in .NET 8, ABP Framework, and ASP.NET Core for enterprise-grade backends.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="hl-icon">&#127973;</div>
+          <h4>Healthcare &amp; SaaS</h4>
+          <p>Built HIPAA-compliant platforms and multi-tenant SaaS systems serving thousands of users.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="hl-icon">&#9881;&#65039;</div>
+          <h4>Microservices Architect</h4>
+          <p>Designed and deployed 20+ microservices with event-driven communication patterns.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background: var(--surface);">
+  <div class="container">
+    <div class="section-title">Technical Skills</div>
+    <div class="section-sub">Technologies I work with daily to build production systems.</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3><span class="dot" style="background: var(--purple);"></span> Backend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">.NET 8</span>
+          <span class="skill-tag">C#</span>
+          <span class="skill-tag">ABP Framework</span>
+          <span class="skill-tag">ASP.NET Core</span>
+          <span class="skill-tag">EF Core</span>
+          <span class="skill-tag">WCF</span>
+          <span class="skill-tag">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot" style="background: var(--accent);"></span> Frontend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Angular</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">Redux</span>
+          <span class="skill-tag">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot" style="background: var(--green);"></span> Databases</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">SQL Server</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">Redis</span>
+          <span class="skill-tag">RabbitMQ</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot" style="background: var(--orange);"></span> Cloud &amp; DevOps</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Azure DevOps</span>
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">GitHub Actions</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot" style="background: var(--pink);"></span> Architecture</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Microservices</span>
+          <span class="skill-tag">DDD</span>
+          <span class="skill-tag">Event-Driven</span>
+          <span class="skill-tag">Multi-Tenant SaaS</span>
+          <span class="skill-tag">REST</span>
+          <span class="skill-tag">GraphQL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot" style="background: #ef4444;"></span> Security</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">OAuth2 / OIDC</span>
+          <span class="skill-tag">JWT</span>
+          <span class="skill-tag">RBAC</span>
+          <span class="skill-tag">HIPAA</span>
+          <span class="skill-tag">SOC 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-title">Experience</div>
+    <div class="section-sub">Building enterprise software across healthcare and SaaS domains.</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3>Senior Full Stack Developer</h3>
+        <div class="t-company">Nextere LLC</div>
+        <div class="t-date">2022 &mdash; Present</div>
+        <ul>
+          <li>Architected and built a 20+ microservices SaaS platform using .NET 8 and ABP Framework</li>
+          <li>Developed HIPAA-compliant EDE healthcare platform handling sensitive patient data</li>
+          <li>Implemented event-driven architecture with RabbitMQ for async inter-service communication</li>
+          <li>Engineered Redis caching layer reducing database load and improving response times</li>
+          <li>Containerized services with Docker and built robust CI/CD pipelines</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background: var(--purple);"></div>
+        <h3>Full Stack Developer</h3>
+        <div class="t-company">HSI</div>
+        <div class="t-date">2017 &mdash; 2021</div>
+        <ul>
+          <li>Led legacy system modernization from classic ASP.NET to modern .NET and React stack</li>
+          <li>Built GraphQL APIs enabling flexible, efficient data access for frontend clients</li>
+          <li>Achieved 40% improvement in API response times through query optimization</li>
+          <li>Mentored junior developers and established team coding standards and code review practices</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--surface);">
+  <div class="container">
+    <div class="section-title">Projects</div>
+    <div class="section-sub">Open-source and personal projects showcasing my work.</div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>Complete-Ecommerce</h3>
+        <p>A full-featured e-commerce platform built with C# and .NET, featuring product management, cart, and checkout workflows.</p>
+        <div class="p-tech">C# &middot; .NET &middot; SQL Server</div>
+        <a href="https://github.com/mMahabub/Complete-Ecommerce" class="p-link" target="_blank" rel="noopener noreferrer">View on GitHub &#8599;</a>
+      </div>
+      <div class="project-card">
+        <h3>weather-app</h3>
+        <p>Real-time weather application built with React, providing current conditions and forecasts with a clean UI.</p>
+        <div class="p-tech">React &middot; JavaScript &middot; API</div>
+        <a href="https://github.com/mMahabub/weather-app" class="p-link" target="_blank" rel="noopener noreferrer">View on GitHub &#8599;</a>
+      </div>
+      <div class="project-card">
+        <h3>Libas</h3>
+        <p>Fashion e-commerce storefront with product browsing, filtering, and shopping cart functionality.</p>
+        <div class="p-tech">JavaScript &middot; HTML &middot; CSS</div>
+        <a href="https://github.com/mMahabub/Libas" class="p-link" target="_blank" rel="noopener noreferrer">View on GitHub &#8599;</a>
+      </div>
+      <div class="project-card">
+        <h3>CalorieCal</h3>
+        <p>Calorie tracking calculator for managing daily nutritional intake with an intuitive interface.</p>
+        <div class="p-tech">JavaScript &middot; HTML &middot; CSS</div>
+        <a href="https://github.com/mMahabub/CalorieCal" class="p-link" target="_blank" rel="noopener noreferrer">View on GitHub &#8599;</a>
+      </div>
+      <div class="project-card">
+        <h3>CudeProject</h3>
+        <p>Project demonstrating CRUD operations with clean architecture patterns and best practices.</p>
+        <div class="p-tech">Full Stack</div>
+        <a href="https://github.com/mMahabub/CudeProject" class="p-link" target="_blank" rel="noopener noreferrer">View on GitHub &#8599;</a>
+      </div>
+      <div class="project-card">
+        <h3>assessmentApp</h3>
+        <p>Assessment application for creating and taking evaluations with scoring and results tracking.</p>
+        <div class="p-tech">JavaScript &middot; HTML &middot; CSS</div>
+        <a href="https://github.com/mMahabub/assessmentApp" class="p-link" target="_blank" rel="noopener noreferrer">View on GitHub &#8599;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-title">Get In Touch</div>
+    <div class="section-sub">I'm open to new opportunities. Let's connect.</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="c-icon">&#9993;</div>
+        <h4>Email</h4>
+        <p><a href="mailto:mohammad.alam9212@gmail.com">mohammad.alam9212@gmail.com</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">&#128222;</div>
+        <h4>Phone</h4>
+        <p><a href="tel:+19294995093">(929) 499-5093</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">&#128187;</div>
+        <h4>GitHub</h4>
+        <p><a href="https://github.com/mMahabub" target="_blank" rel="noopener noreferrer">github.com/mMahabub</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    &copy; 2026 Mohammad Mahabub Alam. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>
